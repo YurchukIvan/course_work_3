@@ -1,16 +1,32 @@
-# This is a sample Python script.
+import os
+import utils
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# путь к json файлу
+PATH = os.path.join('data', 'operations.json')
 
 
-# Press the green button in the gutter to run the script.
+def main():
+    """
+    Основная функция
+    :return: результат
+    """
+    # переменная для массива данных
+    operation_list = utils.load_json(PATH)
+
+    # переменная для массива 5 последних выполненных операций
+    executed_list = utils.get_list_executed(operation_list)
+
+    # переменная для массива экземпляров класса
+    class_list = utils.get_list_class(executed_list)
+
+    # цикл на вывод операций
+    for operation in class_list:
+        print(f'\033[35mОперация:\033[00m\n'
+              f'{operation.formate_date()} {operation.description}\n'
+              f'{operation.mask_from()} -> {operation.mask_to()}\n'
+              f'{operation.amount} {operation.currency}\n'
+              f'')
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
